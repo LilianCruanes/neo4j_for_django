@@ -1,0 +1,321 @@
+### >> Nodes :
+[TOC]
+
+<br/>
+<br/>
+
+---
+
+# Introducing
+**neo4j_for_django** provides a group of classes used to structure and manipulate nodes and properties.  
+Only the most important things have been introduced. And that, to let at the user of the package a lot of flexibility, and do not burden him with useless things.  
+More, in a work with a database, personalization of each request is the key of fast and powerful interactions.  
+<br/>
+<br/>
+<br/>
+
+---
+
+# Node models  
+> Note that all **node models** in each application, must be written in files named **`node_models.py`**.  
+
+<br/>
+
+
+
+- ## Create node models
+
+Whereas **Django** proposes **models** for relational databases, **neo4j_for_django** introduces the **node-models** for graph databases. The principle is the same : make classes that represent database entities, and that give the possibility to easily interact with them.  
+A node-models class is a class that inherits from the **`Node()`** class, imported from **`neo4j_for_django.db.node_models`**.  
+Like with Django models, you will have to instantiate these node-models classes to automatically create a node in the database.  
+<br/>
+Demonstration :
+
+```python
+from neo4j_for_django.db import node_models
+
+
+class Person(node_models.Node):
+    pass
+  
+  
+Person()
+```  
+<br/>
+Preview on Neo4j Desktop :
+
+![empty node preview](img/empty-node-preview.png)
+<br/>
+<br/>
+
+Create Node it's not harder than that !  
+Now, let's see how to handle the labels of ours nodes.
+
+<br/>
+<br/>
+
+- ## Work with node models
+
+A node doesn't have native getter, setter nor deletter, and this, cause these methods must be personnalized for each Node class. Handle perfectly all the situations is impossible, and try to do this, leads to very heavy and inneficient programs. For example, a first class could have an **unique property** (to efficiently identify each instance) that contains an **uuid** (Universal Unique Identifier), when an other could have as unique property a **codename**, etc...  
+The **neo4j_for_django** authentification defines a node models named **`User()`**, and a **`get()`** method has been developped for this class. This method is based on the **uuid** and **email** properties of all the instance of the **`User()`** class, because they are both required and unique properties. 
+Let's see it as an example and consider that this example is a bit more complex that what you will have to do generally :
+
+```python
+from neo4j_for_django.db import gdbh, node_models
+from neo4j_for_django.db.exceptions import N4DGetUserError
+
+
+class FakeInstance:
+    pass
+    
+
+class User(node_models.Node):
+
+    (...)
+
+    @classmethod
+    def get(cls, uuid=None, email=None):
+
+        # 1. Check the values provided and build different cypher formats for each situation
+        if uuid and email is None:
+            properties = f"uuid: '{uuid}'"
+
+        elif email and uuid is None:
+            properties = f"email: '{email}'"
+
+        elif uuid and email:
+            properties = f"uuid: '{uuid}', email: '{email}'"
+
+        else:
+            raise N4DGetUserError("To get an user, you must provide his 'uuid' or his 'email' or both.")
+        
+        # 2. Try to get the user that corresponds to these datas.
+        response = gdbh.r_transaction("MATCH (u:User {%s}) RETURN (u)" % properties)
+
+        # 3. Transform these datas in a user instance :
+        # We use the empty FakeInstance() class that allow us to build a 'fake' user instance
+        # (without creating a real new User() instance, which one, would be automaticaly saved in the database).
+        # But this step is optionnal. You could also return JSONified node datas.
+        if response:
+            fake_user_instance = FakeInstance()
+            fake_user_instance.__class__ = cls`
+            setattr(fake_user_instance, 'is_super_user', response[0]['u']._properties['is_super_user'])
+            setattr(fake_user_instance, 'is_staff_user', response[0]['u']._properties['is_staff_user'])
+            setattr(fake_user_instance, 'is_active_user', response[0]['u']._properties['is_active_user'])
+            setattr(fake_user_instance, 'uuid', response[0]['u']._properties['uuid'])
+            setattr(fake_user_instance, 'first_name', response[0]['u']._properties['first_name'])
+            setattr(fake_user_instance, 'last_name', response[0]['u']._properties['last_name'])
+            setattr(fake_user_instance, 'email', response[0]['u']._properties['email'])
+            setattr(fake_user_instance, 'password', response[0]['u']._properties['password'])
+            setattr(fake_user_instance, 'registration_datetime', response[0]['u']._properties['registration_datetime'])
+
+            return fake_user_instance
+
+        else:
+            return AnonymousUser()
+```
+
+Note that the returned value, if it contains nodes, should always be in a JSON style format, or be an instance.  
+See : [Conventions](https://neo4j-for-django.readthedocs.io/en/latest/conventions/).    
+<br/>
+<br/>
+<br/>
+
+---
+
+# Labels
+<br/>
+
+- ## Create labels
+
+By default, if no configuration is provided by the user of the package, as you can see above, the only and unique label applied to the node is the name of the class from where he is from.
+On the other hand, the labels of a node are also easily customizable.
+To do that, you just have to define a **labels** attribute in your class (which one that is inheriting from **`Node()`**), and put as value of this attribute, a list that contains all the labels of the nodes that will be produced by the class.  
+<br/>
+Demonstration :
+
+```python
+from neo4j_for_django.db import node_models
+
+
+class Person(node_models.Node):
+    labels = ["Person", "Administrator"]
+  
+  
+Person()
+```  
+<br/>
+Preview on Neo4j Desktop :
+
+![labels customization preview](img/labels-customization-preview.png)
+<br/>
+<br/>
+
+The labels propety can also be defined with only a string :
+```python
+from neo4j_for_django.db import node_models
+
+
+class Person(node_models.Node):
+    labels = "Administrator"
+  
+  
+Person()
+```
+<br/>
+<br/>
+> Note that **the class name is always added as a label**, so, for the last example, the node created will have both "Person" and "Administrator" labels (even if we fill the **labels** attribute only with "Administrator").  
+In the other hand, it is very recommanded to always add the **labels** attribute, even if the only desired label is the name of the class. This practice will lead to a more explicit and readable code.
+
+<br/>
+<br/>
+
+- ## Work with labels
+
+    - ### Delete and update labels :
+The deletion and the modification of labels is prohibited in a view to maintaining coherence.  
+But if it's absolutely needed to do what you want to do, you could easily create method that delete and update labels.
+<br/>
+<br/>
+<br/>
+    - ### Retrieve labels :
+You can easily retrieve the labels of node for then treat them as you want.  
+Two solutions exists :  
+<br/> 
+You can simply access to the labels of a node named **`ABC`**, by doing  **`ABC.labels`**.  
+But you can also use the **`get_labels()`** method of node objects like that: **`ABC.get_labels()`**
+<br/>  
+The two ways will return you a list of labels if there are many, and just a string if you have filled the labels attribute only with a string.  
+<br/>
+<br/>
+<br/>
+
+---
+
+# Properties
+<br/>
+
+- ## Create properties
+
+To end customization of our nodes, add them some properties.  
+With the **neo4j_for_django** package, a property is an instance of the **`Property()`** class imported from **`neo4j_for_django.db.node_models`**.
+
+The property can take 5 parameters :  
+
+- **`key`** (required) : The key is often defined with the name of the property. The key will be used to access to an object property content (with the syntax **`(object).(key)`**) but also to do researches into the Neo4j database.  
+<br/>
+- **`content`** (do not fill) : The content is the value of a property, this parameter will be filled during the instantiation of the future nodes. Do not fill the **content** parameter to set a default value, you must fill the **default** parameter to do that.  
+<br/>
+- **`required`** (optional) : If set on True, and if the content of the property is empty, an error will be raised.  
+<br/>
+- **`unique`** (optional) : If set on True, and if the content of the property combinaison key+content is already in the database, an error will be raised.  
+<br/>
+- **`default`** (optional) : A default value that will fill the content if it is empty.  
+<br/>
+
+Other particularities of the **`neo4j_for_django`** properties :
+
+- The name of a property attribute always starts with an underscore (' **_** ').  
+<br/>
+- A property cannot have both **`required`** and **`default`** parameters (with a view to maintaining coherence).  
+<br/>
+
+
+Demonstration :
+
+```python
+from neo4j_for_django.db import gdbh, node_models
+from neo4j_for_django.db.utils import make_uuid
+import datetime
+
+
+class Article(node_models.Node):
+    labels = "Article"
+    
+    _uuid = node_models.Property(key="uuid",
+                                 default=make_uuid,
+                                 unique=True)
+    
+    _author = node_models.Property(key='author',
+                                   default="An anonymous author.")
+    
+    _title = node_models.Property(key='title',
+                                  required=True,
+                                  unique=True)
+    
+    _content = node_models.Property(key='content',
+                                    required=True)
+    
+    _publication_datetime = node_models.Property(key="publication_datetime",
+                                                default=datetime.datetime.now)
+
+
+a_new_article = Article(author="Mary C",
+                        title="The earth cry",
+                        content="Lorem ipsum dolor sit amet...")
+                        
+
+response = gdbh.r_transaction("MATCH (a:Article {author: 'Mary C'}) ")
+print(response)
+
+
+>>> [{'a': <Node id=177 labels={'Article'} properties={'title': 'The earth cry', 'uuid': 'c6b99f2ca0b34a
+    7eaec930ac1173d673', 'publication_datetime': '2019-04-09 04:36:09.962512', 'author': 'Mary C', 'cont
+    ent': 'Lorem ipsum dolor sit amet...'}>}]                 
+
+```  
+<br/>
+Preview on Neo4j Desktop :
+
+![properties on node preview](img/properties-on-node-preview.png)  
+
+<br/>
+<br/>
+
+- ## Apply properties' restrictions
+<br/>
+For better performances, the restrictions of all the properties of all your nodes should be applied in the Neo4j database. To apply all the restrictions contained in your project or update them if there are news, you can simply use the **`python manage.py n4d-apply`** command.  
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+- ## Work with properties
+
+As for the labels, you can easily access to the properties of a node with the syntax **`(object).(property key)`** :
+
+```
+print(a_new_article.author)
+
+
+>>> Mary C
+```
+
+You could also retrieve all the properties of a node with the **`get_properties()`** method of the Node's instances. 
+```
+print(a_new_article.get_properties())
+
+
+>>> {'title': 'The earth cry', 'uuid': 'c6b99f2ca0b34a7eaec930ac1173d673',
+ 'publication_datetime': '2019-04-09 04:36:09.962512', 'author': 'Mary C',
+  'content': 'Lorem ipsum dolor sit amet...'}
+```
+
+
+<br/>
+<br/>
+<br/>
+
+---
+
+# Methods
+
+**neo4j_for_django** provides methods (stored in **`neo4j_for_django.db.signals`**) that perform the basic and frequently done actions.
+
+- The **`make_uuid()`** method returns an Universal Unique Identifier. It is very useful to provide a unique property to identify efficiently node instances.
+
+
+<br/>
+<br/>
+<br/>

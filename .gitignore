@@ -1,0 +1,7 @@
+build/
+.idea/
+src/.idea/
+src/build/
+src/dist/
+src/neo4j_for_django.egg-info/
+src/neo4j_for_django/.idea/

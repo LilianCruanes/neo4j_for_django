@@ -1,0 +1,18 @@
+site_name: neo4j_for_django
+nav:
+  - neo4j_for_django:
+    - Presentation: presentation.md
+    - Installation: installation.md
+    - Getting started: getting-started.md
+    - Nodes: nodes.md
+    - Authentication: authentication.md
+    - Sessions: sessions.md
+    - Advanced Neo4j concepts: advanced-neo4j-concepts.md
+    - Settings: settings.md
+    - Conventions: conventions.md
+    - License : license.md
+theme: readthedocs
+markdown_extensions:
+  - toc:
+      permalink: True
+      toc_depth: 2
