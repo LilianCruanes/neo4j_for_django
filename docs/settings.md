@@ -119,10 +119,10 @@ N4D_LOGOUT_REDIRECT_URL = None # TODO
 ##############
 
 
-N4D_PEPPER_1 = 'UõØ8Ù¡óZ & õÄÈÍ£á¹ > E'
+N4D_PEPPER_1 = 'e3cccVk8m^jwK2w/&g1:wFE^1'
 
 
-N4D_PEPPER_2 = '©qJTÕi4óé²nMs¬}fmô-àÍÁ³sÚßõây.ÀÙX$)©ñáÖ¯%'
+N4D_PEPPER_2 = 'E^7vV!Sm2:K!yDJ4oebOCQM*7gGdR%?,W.'
 ```
 <br/>
 <br/>

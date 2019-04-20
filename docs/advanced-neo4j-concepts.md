@@ -68,7 +68,7 @@ Let's see how to setup manually a session :
 
 2) Instantiate **`Session`** class to create a session. This class takes 3 parameters :  
 
-- **`database_instance`** (required) : You can fill it with your personnalized database instance if you have one, else you can just fill it with the native **gdbh** instance imported from **`neo4j_for_django.db.base`**.  
+- **`database_instance`** (required) : You can fill it with your personalized database instance if you have one, else you can just fill it with the native **gdbh** instance imported from **`neo4j_for_django.db.base`**.  
 <br/>
 - **`type`** (optional) : This parameter defines the access mode of the session. It can be filled with 'WRITE' or 'READ' (See more below in the **Access mode** part.)  
 <br>
@@ -95,7 +95,7 @@ with my_session as session:
 ---
 
 # Transactions
-Transaction are sent to a Neo4j database to interact with it. Like explained earlier in the documentation, transaction can be handled automatically with the **`w_transaction()`** and **`r_transaction`** of the native database instance, named **`gdbh`**. But you can also right your own
+Transaction are sent to a Neo4j database to interact with it. Like explained earlier in the documentation, transaction can be handled automatically with the **`w_transaction()`** and **`r_transaction`** of the native database instance, named **`gdbh`**. But you can also wright yours own transactions.
 Let's see how to setup manually a transaction :
 
 1) Import the **`Transaction`** class from **`neo4j_for_django.db.base`**.  

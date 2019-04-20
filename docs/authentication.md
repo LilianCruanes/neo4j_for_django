@@ -16,7 +16,7 @@ Let's see more about that.
 ---
 
 # Initialize native permissions
-For each node models and like in the native Django authentication, it is recommanded to create 4 permission for each new node models class : 
+For each node models and like in the native Django authentication, it is recommended to create 4 permission for each new node models class : 
 
 - "**create_**(class name)",  
 
@@ -57,7 +57,7 @@ Like in the native Django authentication, permissions are instances of a class n
 We can find this class into the **`neo4j_for_django.contrib.auth.node_models`** file.  
 A Permission instance has 2 parameters :
 
-- **`codename`** (requiered and unique) : like in the Django native authentication, the **codename** serves to identify the permissions between them. The **codename** has an **unicity** constraint and is **required**.
+- **`codename`** (required and unique) : like in the Django native authentication, the **codename** serves to identify the permissions between them. The **codename** has an **unicity** constraint and is **required**.
 <br/>
 <br/>
 - **`description`** (required and unique) : like in the Django native authentication, the **description** is a text, generally not too long, that describes the permission.
@@ -82,7 +82,7 @@ Some examples :
 <br/>
 - **view_administration_page** (CRUD + a page of the site),  
 <br/>
-- **update_own_messages** (CRUD + cible + **`Message`** node model),  
+- **update_own_messages** (CRUD + target + **`Message`** node model),  
 <br/>
 - **delete_post** (CRUD + **`Post`** node model),  
 <br/>
@@ -118,11 +118,11 @@ Permission.get("can_add_post")
 
  - ## Create groups
  
-Like in the native Django authentification, groups are instances of a class named **`Group`**.  
+Like in the native Django authentication, groups are instances of a class named **`Group`**.  
 We can find this class into the **`neo4j_for_django.contrib.auth.node_models`** file.  
 A Group instance has 2 parameter :
 
-- **`uuid`** (do not fill) : Each group has an Universal Unique Identifier. This parameter must not be filled during the Group instanciation cause it is automaticaly filled.  
+- **`uuid`** (do not fill) : Each group has an Universal Unique Identifier. This parameter must not be filled during the Group instantiation cause it is automatically filled.  
 <br/>
 - **`name`** (required and unique) : like in the Django native authentication, the **name** parameter is the name of the group.  
 <br/>
@@ -176,7 +176,7 @@ Group.get_permissions()
 
 > - ### Get groups' users
     
-The **`Group`** instances possesse a **`get_users()`** method. This method doesn't take any parameter, and returns a set of **`User`** instances :
+The **`Group`** instances possess a **`get_users()`** method. This method doesn't take any parameter, and returns a set of **`User`** instances :
 ```python
 from neo4j_for_django.contrib.auth.node_models import Group
 
@@ -193,7 +193,7 @@ Group.get_users()
 
 > - ### Add groups' permissions
     
-The **`Group`** instances possesse an **`add_permission()`** method. This method takes as unique parameter, the **codename** of the permission to add to the group :
+The **`Group`** instances possess an **`add_permission()`** method. This method takes as unique parameter, the **codename** of the permission to add to the group :
 
 ```python
 from neo4j_for_django.contrib.auth.node_models import Group
@@ -216,17 +216,17 @@ my_group.add_permission("delete_session")
 
  - ## Create users
  
-Like in the native Django authentification, users are instances of a class named **`User`**.
+Like in the native Django authentication, users are instances of a class named **`User`**.
 We can find this class into the **`neo4j_for_django.contrib.auth.node_models`** file.  
 A User instance has 8 parameters :  
 
-- **`uuid`** (do not fill) : Each user has an Universal Unique Identifier. This parameter must not be filled during the User instanciation cause it is automatically filled.  
+- **`uuid`** (do not fill) : Each user has an Universal Unique Identifier. This parameter must not be filled during the User instantiation cause it is automatically filled.  
 <br/>
-- **`is_super_user`** (optional, default=**False**) : As in the native Django authentication, this parameter can be either True or False. If setted on True, the user possesses full rights, he can do anything.  
+- **`is_super_user`** (optional, default=**False**) : As in the native Django authentication, this parameter can be either True or False. If defined on True, the user possesses full rights, he can do anything.  
 <br/>
-- **`is_staff_user`** (optional, default=**False**) : As in the native Django authentication, this parameter can be either True or False. If setted on True, the user can access to the administration page of the site.  
+- **`is_staff_user`** (optional, default=**False**) : As in the native Django authentication, this parameter can be either True or False. If defined on True, the user can access to the administration page of the site.  
 <br/>
-- **`is_active_user`** (optional, default=**True**) : As in the native Django authentication, this parameter can be either True or False. If setted on True, the user can log into the site. However, if setted on False, the account of the user can be considered as **"deactivated"** : the user can not log into the website.  
+- **`is_active_user`** (optional, default=**True**) : As in the native Django authentication, this parameter can be either True or False. If defined on True, the user can log into the site. However, if defined on False, the account of the user can be considered as **"deactivated"** : the user can not log into the website.  
 <br/>
 - **`first_name`** (required) : The first name of the user.  
 <br/>
@@ -236,12 +236,12 @@ A User instance has 8 parameters :
 <br/>
 - **`password`** (required) : The encrypted password of the user.  
 <br/>
-- **`registration_datetime`** (do not fill, default=**datetime.datetime.now**) : The datetime value at the moment where the user has created this account.  This parameter must not be filled during the User instanciation cause it is automatically filled.  
+- **`registration_datetime`** (do not fill, default=**datetime.datetime.now**) : The datetime value at the moment where the user has created this account.  This parameter must not be filled during the User instantiation cause it is automatically filled.  
 <br/>
 
 Before users creation, 2 variables must be defined in your general **settings.py** file and below the the **`set_neo4j_for_django_settings_on()`** method :  
 
-- **`PEPPER_1`** : A string used in the password hashing to strengthen the solidity of the hashs. **This string must be secret.**  
+- **`PEPPER_1`** : A string used in the password hashing to strengthen the solidity of the hash. **This string must be secret.**  
 <br/>
 - **`PEPPER_2`** : (The same thing).  
 <br/>
@@ -338,7 +338,7 @@ User.get(email="john@mail.com")
 
 >  - ### Update users' properties
 
-The **`User`** instances possesse an **`update()`** method. This method takes 2 parameters : the **property name** and the **new property value**.
+The **`User`** instances possess an **`update()`** method. This method takes 2 parameters : the **property name** and the **new property value**.
 ```python
 from neo4j_for_django.contrib.auth.node_models import User
 
@@ -361,7 +361,7 @@ print(john)
 
 > - ### Get users' permissions
     
-The **`User`** instances possesse a **`get_permissions()`** method that returns a set of all the concernec user's permissions. This method doesn't take any parameter.
+The **`User`** instances possess a **`get_permissions()`** method that returns a set of all the concerned user's permissions. This method doesn't take any parameter.
 ```python
 from neo4j_for_django.contrib.auth.node_models import User
 
@@ -377,7 +377,7 @@ User.get_permissions()
 
 > - ### Get users' groups
     
-The **`User`** instances possesse a **`get_groups()`** method that returns a set of all the concernec user's groups. This method doesn't take any parameter.
+The **`User`** instances possess a **`get_groups()`** method that returns a set of all the concerned user's groups. This method doesn't take any parameter.
 ```python
 from neo4j_for_django.contrib.auth.node_models import User
 
@@ -392,7 +392,7 @@ User.get_groups()
 
 > - ### Get users' sessions
     
-The **`User`** instances possesse a **`get_sessions()`** method that returns a set of all the concernec user's sessions. This method doesn't take any parameter.
+The **`User`** instances possess a **`get_sessions()`** method that returns a set of all the concerned user's sessions. This method doesn't take any parameter.
 ```python
 from neo4j_for_django.contrib.auth.node_models import User
 
@@ -409,7 +409,7 @@ User.get_session()
 
 > - ### Add users' permissions
     
-The **`User`** instances possesse an **`add_permission()`** method. This method takes as unique parameter, the **codename** of the permission to add to the user :
+The **`User`** instances possess an **`add_permission()`** method. This method takes as unique parameter, the **codename** of the permission to add to the user :
 
 ```python
 from neo4j_for_django.contrib.auth.node_models import User
@@ -425,7 +425,7 @@ an_user.add_permission("delete_session")
 
 > - ### Add users' groups
     
-The **`User`** instances possesse an **`add_group()`** method. This method takes as unique parameter, the **name** of the group into which one we want to add the user :
+The **`User`** instances possess an **`add_group()`** method. This method takes as unique parameter, the **name** of the group into which one we want to add the user :
 
 ```python
 from neo4j_for_django.contrib.auth.node_models import User
@@ -441,7 +441,7 @@ an_user.add_group("Moderator")
 
 > - ### Test users' permissions
 
-The **`User`** instances possesse a **`has_perm()`** method that test if an user has a certain permission. This method takes as unique parameter, the **codename** of the property to check.
+The **`User`** instances possess a **`has_perm()`** method that test if an user has a certain permission. This method takes as unique parameter, the **codename** of the property to check.
 ```python
 from neo4j_for_django.contrib.auth.node_models import User
 

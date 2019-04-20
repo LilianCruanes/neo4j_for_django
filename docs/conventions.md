@@ -2,7 +2,7 @@
 <br/>
 
 1. **The getter methods** that should return node, the returned value must always be :
-    - Either an instance of the node corresponding class (Example : the **`get()`** method of the **`neo4j_for_django.contrib.auth.node_models.User()`** node model). , 
+    - Either an instance of the node corresponding class (Example : the **`get()`** method of the **`neo4j_for_django.contrib.auth.node_models.User()`** node model), 
     - Or JSONified datas of the node (No example).  
     <br/>
     
@@ -11,7 +11,7 @@
 <br/>
 <br/>
 
-2. **Permissions** should always have a codename composed by a CRUD element ("create", "view", "update", "delete") + (optional) a cible + the concerned node models name or the concerned entity name, in lowercase.  
+2. **Permissions** should always have a codename composed by a CRUD element ("create", "view", "update", "delete") + (optional) a target + the concerned node models name or the concerned entity name, in lowercase.  
                    <br/>
                    Some examples :
                    
@@ -19,7 +19,7 @@
     <br/>
     - **view_administration_page** (CRUD + a page of the site),  
     <br/>
-    - **update_own_messages** (CRUD + cible + **`Message`** node model),  
+    - **update_own_messages** (CRUD + target + **`Message`** node model),  
     <br/>
     - **delete_post** (CRUD + **`Post`** node model),  
     <br/>

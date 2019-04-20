@@ -31,7 +31,7 @@ This methods takes two parameters :
 - The **request** (required),  
 <br/>
 
-- **`if_authentication_user`** (optinal) : You have to fill this parameter in the case of an explicit authentication, like below, in a login page : where you retrieve the user from the **`authenticate()`** method. If you don't fill the parameter, the method will not try to log in the user, but only to preserve his session if there is already one. In all the other case the method triggers a session cleaning.
+- **`if_authentication_user`** (optional) : You have to fill this parameter in the case of an explicit authentication, like below, in a login page : where you retrieve the user from the **`authenticate()`** method. If you don't fill the parameter, the method will not try to log in the user, but only to preserve his session if there is already one. In all the other case the method triggers a session cleaning.
 <br/>
 <br/>
 

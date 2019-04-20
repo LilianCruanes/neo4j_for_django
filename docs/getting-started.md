@@ -6,9 +6,9 @@
 ---
 
 # Introducing
-The **neo4j_for_django package** is very fast to setup. Just **2 steps** are needed to execute yours first cypher requests.
+The **neo4j_for_django package** is very fast to setup. Just **2 steps** are needed to execute your first cypher requests.
 
->> If you don't have already install the package, please see the [installation](https://neo4j-for-django.readthedocs.io/en/latest/installation/) page.  
+>> If you haven't already installed the package, please see the [installation](https://neo4j-for-django.readthedocs.io/en/latest/installation/) page.  
 <br/>
 <br/>
 
@@ -24,7 +24,7 @@ from neo4j_for_django import set_neo4j_for_django_settings_on
 ```
 <br/>
 <br/>
-Then, use this method on all the datas contained in your settings.py file. The **`locals()`** function return a dictionnary that contains all of these datas.
+Then, use this method on all the datas contained in your settings.py file. The **`locals()`** function returns a dictionary that contains all these datas.
 So just put this **at the bottom** of your settings.py file :
 
 > <small>_settings.py_</small>
@@ -38,11 +38,11 @@ Finally, and always in the same file (**just below the method** that we have pre
     - **`N4D_DATABASE_ID`**,  
     - and **`N4D_DATABASE_PASSWORD`**.
 
-**`N4D_DATABASE_URI`** is the bolt adress of your database. Generally on a local server, the bolt adress is '**bolt://localhost:7687**'. But you can find more details in the parameters of your Neo4j database and in the official [documentation](https://neo4j.com/docs/driver-manual/1.7/client-applications/#driver-connection-uris).
+**`N4D_DATABASE_URI`** is the bolt address of your database. Generally on a local server, the bolt address is '**bolt://localhost:7687**'. But you can find more details in the parameters of your Neo4j database and in the official [documentation](https://neo4j.com/docs/driver-manual/1.7/client-applications/#driver-connection-uris).
 
 **`N4D_DATABASE_ID`** is your Neo4j database **id** or **username**. By default the id is defined on 'neo4j'.
 
-**`N4D_DATABASE_PASSWORD`** is your Neo4j database **password**. By default the password is defined on 'neo4j' too. But normally and if you don't have change the password before, during the first run of the Neo4j database, we will ask you to replace the default password by another. 
+**`N4D_DATABASE_PASSWORD`** is your Neo4j database **password**. By default the password is defined on 'neo4j' too. But normally and if you haven't changed the password before, during the first run of the Neo4j database, we will ask you to replace the default password by another. 
 
 Example :
 
@@ -59,7 +59,7 @@ N4D_DATABASE_PASSWORD = '1234'
 <br/>
 <br/>
 
-**WARNING** : don't forget to remove the default admin page at the creation of your project, cause the Django administration is'nt already supported by **neo4j_for_django**. Else, a "LookupError: No installed app with label 'admin'." will be raised.
+**WARNING** : don't forget to remove the default admin page at the creation of your project, because Django administration isn't already supported by **neo4j_for_django**. Else, a "LookupError: No installed app with label 'admin'." will be raised.
 
 ```python
 from django.contrib import admin
@@ -83,7 +83,7 @@ urlpatterns = [
 from neo4j_for_django.db import gdbh
 ```
 <br/>
-**g-db-h** means **_Graph Database Handler_** and it is an instance of the **`GraphDatabaseHandler()`** class. This instance will be used all the times where we will want to interact with the Neo4j database.
+**g-db-h** means **_Graph Database Handler_** and it is an instance of the **`GraphDatabaseHandler()`** class. This instance will be used everytime we want to interact with the Neo4j database.
 <br/>
 <br/>
 

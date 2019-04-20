@@ -14,7 +14,7 @@ This python 3.X package provides a support to the Neo4j databases in the Django 
 ### Documentation tree :
 
 
-- [Presentaiton](https://neo4j-for-django.readthedocs.io/en/latest/presentation/)
+- [Presentation](https://neo4j-for-django.readthedocs.io/en/latest/presentation/)
 <br/>
 <br/>
 
@@ -105,7 +105,7 @@ This python 3.X package provides a support to the Neo4j databases in the Django 
 ### Project tree :
 <br/>
 
-##### Authentification (neo4j_for_django.contrib.auth) : 
+##### Authentication (neo4j_for_django.contrib.auth) : 
 - _neo4j_for_django.contrib.auth._**management**/ 
 
 	- _neo4j_for_django.contrib.auth.management._**commands**/
