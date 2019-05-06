@@ -9,7 +9,7 @@
 # Introducing
 **neo4j_for_django** provides a group of classes used to structure and manipulate nodes and properties.  
 Only the most important things have been introduced, in order to leave lots of flexibility to the package's user and not to burden him with useless things.  
-Furthermore, in a work with a database, personalization of each request is the key of fast and powerful interactions.  
+Furthermore, when you work with a database, personalization of each request is the key of fast and powerful interactions.  
 <br/>
 <br/>
 <br/>
@@ -25,7 +25,7 @@ Furthermore, in a work with a database, personalization of each request is the k
 
 - ## Create node models
 
-Whereas **Django** proposes **models** for relational databases, **neo4j_for_django** introduces the **node-models** for graph databases. The principle is the same : make classes that represent database entities, and that give the possibility to interact easily with them.  
+Whereas **Django** proposes **models** for relational databases, **neo4j_for_django** introduces the **node-models** for graph databases. Principle is the same : make classes that represent database entities, and that give the possibility to interact easily with them.  
 A node-models class is a class that inherits from the **`Node()`** class, imported from **`neo4j_for_django.db.node_models`**.  
 Like with Django models, you will have to instantiate these node-models classes to automatically create a node in the database.  
 <br/>
@@ -128,9 +128,9 @@ See : [Conventions](https://neo4j-for-django.readthedocs.io/en/latest/convention
 
 - ## Create labels
 
-By default, if no configuration is provided by the user of the package, as you can see above, the only and unique label applied to the node is the name of the class from where he comes from.
+By default, if no configuration is provided by the package's user, as you can see above, the only and unique label applied to the node is the name of the class he comes from.
 On the other hand, labels of a node are also easily customizable.
-To do that, you only have to define a **labels** attribute in your class (which one is inheriting from **`Node()`**), and put as value of this attribute, a list that contains all the labels of the nodes that will be produced by the class.  
+To do that, you only have to define a **labels** attribute in your class (which one is inheriting from **`Node()`**), and put as the value of this attribute, a list that contains all the labels of the nodes that will be produced by the class.  
 <br/>
 Demonstration :
 
@@ -179,8 +179,8 @@ But if it's absolutely needed to do what you want to do, you could easily create
 <br/>
 <br/>
     - ### Retrieve labels :
-You can easily retrieve labels of a node; for then treat them as you want.  
-Two solutions exists :  
+You can easily retrieve labels of a node and then use them as you want.  
+Two solutions exist :  
 <br/> 
 You can simply access to the labels of a node named **`ABC`**, by doing  **`ABC.labels`**.  
 But you can also use the **`get_labels()`** method of node objects like that: **`ABC.get_labels()`**
@@ -204,7 +204,7 @@ The property can take 5 parameters :
 
 - **`key`** (required) : The key is often defined with the name of the property. The key will be used to access to an object property content (with the syntax **`(object).(key)`**) but also to do researches into the Neo4j database.  
 <br/>
-- **`content`** (do not fill) : The content is the value of a property, this parameter will be filled during the instantiation of the future nodes. Do not fill the **content** parameter to set a default value, you must fill the **default** parameter to do that.  
+- **`content`** (do not fill) : The content is the value of a property, this parameter will be filled in during the instantiation of the future nodes. Do not fill the **content** parameter to set a default value, you must fill the **default** parameter to do that.  
 <br/>
 - **`required`** (optional) : If set on True, and if the content of the property is empty, an error will be raised.  
 <br/>
@@ -274,7 +274,7 @@ Preview on Neo4j Desktop :
 
 - ## Apply properties' restrictions
 <br/>
-For better performances, the restrictions of all the properties of all your nodes should be applied in the Neo4j database. To apply all the restrictions contained in your project or update them if there are news, you can simply use the **`python manage.py n4d-apply`** command.  
+For better performances, all properties'restrictions of all your nodes should be applied in the Neo4j database. To apply all the restrictions contained in your project or update them if there are news, you can simply use the **`python manage.py n4d-apply`** command.  
 <br/>
 <br/>
 <br/>
