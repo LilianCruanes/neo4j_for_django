@@ -15,8 +15,8 @@ These concepts are used in a Neo4j cluster organisation but are also useful for 
 ---
 
 # Databases
-In a cluster organisation, your server program will have to be connected with many database servers. To create multiple and different connection, you will have to setup multiple instances of the **`Database`** class imported from **`neo4j_for_django.db.base`**. Like explained in all this documentation, these instances will be used to interact with each database.  
-Let's see how to setup a database connection :
+In a cluster organisation, your server program will have to be connected with many database servers. To create multiple and different connections, you will have to set up multiple instances of the **`Database`** class imported from **`neo4j_for_django.db.base`**. As explained in all this documentation, these instances will be used to interact with each database.  
+Let's see how to set up a database connection :
 
 1) Import the **`Database`** class from **`neo4j_for_django.db.base`**.  
 
@@ -61,8 +61,8 @@ These parameters define the transactions modalities (after the establishment of 
 ---
 
 # Sessions
-Session are groups of transaction used to establish an unique connection for all transactions contained in it.  
-Let's see how to setup manually a session :  
+Sessions are groups of transactions used to establish an unique connection for all transactions contained in it.  
+Let's see how to set up manually a session :  
 
 1) Import the **`Session`** class from **`neo4j_for_django.db.base`**.  
 
@@ -95,8 +95,8 @@ with my_session as session:
 ---
 
 # Transactions
-Transaction are sent to a Neo4j database to interact with it. Like explained earlier in the documentation, transaction can be handled automatically with the **`w_transaction()`** and **`r_transaction`** of the native database instance, named **`gdbh`**. But you can also wright yours own transactions.
-Let's see how to setup manually a transaction :
+Transactions are sent to a Neo4j database to interact with it. As explained earlier in the documentation, transaction can be handled automatically with the **`w_transaction()`** and **`r_transaction`** of the native database instance, named **`gdbh`**. But you can also write your own transactions.
+Let's see how to set up manually a transaction :
 
 1) Import the **`Transaction`** class from **`neo4j_for_django.db.base`**.  
 
@@ -104,7 +104,7 @@ Let's see how to setup manually a transaction :
 
 - **`session`** (required): An instance of the above Session class.  
 <br/>
-- **`type`** (required): The type of the transaction ('WRITE' or 'READ'). This type, if filled, override the type of session where is contained the transaction. Explanations [here](https://neo4j.com/docs/driver-manual/1.7/sessions-transactions/#driver-transactions-access-mode).  
+- **`type`** (required): The type of the transaction ('WRITE' or 'READ'). This type, if filled, override the type of session where the transaction is contained. Explanations [here](https://neo4j.com/docs/driver-manual/1.7/sessions-transactions/#driver-transactions-access-mode).  
  <br/>                           
 - **`cypher_query`** (required): The cypher query to send to the Neo4j database.  
 
@@ -131,7 +131,7 @@ with my_session as session:
 ---
 
 # Increase syntax
-We've just show how to setup manually transactions and sessions, but we could yet increase the syntax quality of the examples.
+We've just shown how to set up manually transactions and sessions, but we could yet increase the syntax quality of the examples.
 
 Demonstration :
 
@@ -150,12 +150,12 @@ with Session(database_instance=gdbh) as session:
 ---
 
 # Access mode
-A Neo4j cluster can be splitted to let at each database server, a role. This role is either "READING" or "WRITING". This separation guarantees more performance and more stability in your database configuration.  
+A Neo4j cluster can be split to let a role to each database server. This role is either "READING" or "WRITING". This separation guarantees more performance and more stability in your database configuration.  
 See more : [Neo4j Access Mode](https://neo4j.com/docs/driver-manual/1.7/sessions-transactions/#driver-transactions-access-mode)  
 So, the requests sent to the databases servers will have to be also oriented towards a writing database or a reading database. Here is the biggest interest to handle oneself its sessions and transactions to the Neo4j database.  
 <br/>
-You can define the access mode of a session : you'll have, during it's instantiation, to define its **type** parameter on '**WRITE**' or '**READ**'.  
-You can do the same thing with transactions, but note that if a transaction type is defined, it will override the type (if defined too) of the session in which one it is contained.
+You can define the access mode of a session : you'll have, during its instantiation, to define its **type** parameter on '**WRITE**' or '**READ**'.  
+You can do the same thing with transactions, but note that if a transaction type is defined, it will override the type (if defined too) of the session in which it is contained.
 See it [here](https://neo4j.com/docs/api/python-driver/current/transactions.html#access-modes).
 <br/>
 <br/>
@@ -164,7 +164,7 @@ See it [here](https://neo4j.com/docs/api/python-driver/current/transactions.html
 ---
 
 # Bookmarks
-For more program coherence, Neo4j provides **causal chaining** with the usage of **bookmarks**. The principe is to check with a bookmarks follow, if the previous needed transactions are been done. You can learn more about it [here](https://neo4j.com/docs/driver-manual/1.7/sessions-transactions/#driver-transactions-causal-chaining).  
+For more program coherence, Neo4j provides **causal chaining** with the usage of **bookmarks**. The principe is to check with a serie of bookmarks, if the requiered previous sessions have been carried out. You can learn more about it [here](https://neo4j.com/docs/driver-manual/1.7/sessions-transactions/#driver-transactions-causal-chaining).  
 <br/>
 Demonstration :
 
