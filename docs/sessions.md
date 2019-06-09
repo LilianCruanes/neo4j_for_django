@@ -6,10 +6,10 @@
 ---
 
 # Introducing
-**neo4j_for_django** provides easy to setup Django sessions, compatible with the Neo4j databases. So, it will be possible to implement in your site : login and registration portals, and logout button.  
-Like in the native Django sessions, the module interacts with the **neo4j_for_django** authentication. So, we could store in the sessions datas, informations about the current logged user, and so be able to allow access at certain pages for only a certain group of users, for example.  
+**neo4j_for_django** enables easy installation of Django's sessions, compatible with the Neo4j databases. So, it will be possible to implement it in your site : login and registration portals, and logout button.  
+Like in the Django's native sessions, the module interacts with the **neo4j_for_django** authentication. So, we could store in the sessions datas, informations about the current logged user, and so be able to allow access to certain pages for only a certain group of users, for example.  
 
-> Note that to setup the sessions and if we don't want to customize them, we will not work with the **neo4j_for_django** sessions themself, but yet with de **neo4j_for_django** authentication, that itself relies on the sessions package.
+> Note that to setup the sessions and if we don't want to customize them, we will not work with the **neo4j_for_django** sessions themself, but yet with the **neo4j_for_django** authentication, that itself relies on the sessions package.
 
 Let's see that !  
 <br/>
@@ -18,9 +18,9 @@ Let's see that !
 ---
 
 # Login
-Like in the the native Django packages you'll have to create a form that allows to receive the datas in the view.
+Like in the native Django packages you'll have to create a form that allows to receive the datas in the view.
 
-After and like in the native Django, login an user is composed of 2 steps :  
+After and like in the native Django, logging an user is composed of 2 steps :  
 <br/>
 <br/>
 1. First; use the **`authenticate()`** method from **`neo4j_for_django.contrib.auth.authentication`** to check and retrieve the user if one exists with the email and the password provided by the user. This method takes as parameters, the **email** and **password** retrieved.  
@@ -40,7 +40,7 @@ To summarize, this method will :
 - try to log in the user or preserve his session, if the **`if_authentication_user`** parameter is filled,  
 <br/>  
 
-- try only to preserve the user session if the parameter is not filled (like in the **`neo4j_for_django.contrib.auth.middleware`**, which one refresh and preserve the session at every request),  
+- try only to preserve the user session if the parameter is not filled (like in the **`neo4j_for_django.contrib.auth.middleware`**, which refresh and preserve the session at every request),  
 <br/>  
 
 - clean the related sessions in the database and in the cookie, if their is nor the **`if_authentication_user`** parameter, nor a user in the request (or if datas are obsolete or damaged).  
@@ -83,7 +83,7 @@ def login_view(request):
 ---
 
 # Registration
-The registrations of users is principally the role of the authentication **neo4j_for_django** module. You'll have to create a form, that which one, on submit, create an user. (See [Authentication](https://neo4j-for-django.readthedocs.io/en/latest/authentication/))   
+The registrations of users is mainly the role of the authentication **neo4j_for_django** module. You'll have to create a form, which, on submit, will create an user. (See [Authentication](https://neo4j-for-django.readthedocs.io/en/latest/authentication/))   
 But for a better experience you could add an automatic login when the users have just registered :
 <br/>
 
@@ -177,9 +177,9 @@ You can use the **user** variable to access and work with the current logged use
 <br/>
 
 - ## Apply restrictions
-Sometimes we will need to allow only certains users to see a certain content.  
+Sometimes we will need to allow only certain users to see a certain content.  
 <br/>
-Similarly at the native Django packages, you can allow only the logged users to see a certain content. To do that, use the **user_is_logged** variable, that returns **True** if the user is logged and **False** if isn't.  
+In the same way with as the Django's native package, you can allow only the logged users to see a certain content. To do that, use the **user_is_logged** variable, that returns **True** if the user is logged and **False** if he isn't.  
 
 > <small>my_template.html</small>
 ```html
@@ -208,7 +208,7 @@ Similarly at the native Django packages, you can allow only the logged users to 
 <br/>
 <br/>
 
-But, if you want to apply restrictions with specific permissions, you could use the **has_perm** tag from the **auth_extras** library. This is to apply on the user variable and it takes one parameter, the codename of the permission to test, and return **True** if the user has the permission and **False** if it hasn't.  
+But, if you want to apply restrictions with specifics permissions, you could use the **has_perm** tag from the **auth_extras** library. This is to apply on the user variable and it takes one parameter, the codename of the permission to test, and returns **True** if the user has the permission and **False** if he hasn't.  
 > <small>my_template.html</small>
 ```html
 {% load auth_extras %}
@@ -270,7 +270,7 @@ def my_view(request):
 <br/>
 
 - ## Protect authentication pages
-Sometimes, you could have to disallow the access to the authentication pages (login and registration pages) when the user is logged. To do that you can use the **`protect_authentication_view`** decorator on yours login and registration views. This decorator can takes as optional argument the url to which one redirect the user if it is already logged. Else, you can directly define the **`N4D_HOME_PAGE_URL`** in your **settings.py** file.  
+Sometimes, you could have to disallow the access to the authentication pages (login and registration pages) when the user is logged. To do that you can use the **`protect_authentication_view`** decorator on your login and registration views. This decorator can takes as an optional argument the url to which redirect the user if he is already logged. Otherwise, you can directly define the **`N4D_HOME_PAGE_URL`** in your **settings.py** file.  
 <br/>
 > <small>views.py</small>
 ```python
@@ -291,9 +291,9 @@ def login_view(request):
 
 
 - ## Apply restrictions
-Some decorators has been developped to apply restrictions to our views. Their behaviours are similar to the native Django views restrictions.  
+Some decorators have been developped to apply restrictions to our views. Their behaviours are similar to the native Django's views restrictions.  
 <br/>
-First, you can allow the access to a view only if the user is logged, and redirect him to the login page if it is not. To do that you can use above your view, the **`login_required`** decorator imported from **`neo4j_for_django.contrib.auth.decorators`**. This decorator can take one parameter named **`login_page_url`**. This parameter must be defined with the url, to which one redirect the user if he tries to access to the 'logged user only' view.  Else, if the page to redirect is the same for all your project, you could directly define the **`N4D_LOGIN_URL`** variable in your settings.py file. That variable contains the url of your login page.  
+First, you can allow the access to a view only if the user is logged, and redirect him to the login page if he is not. To do that you can use above your views, the **`login_required`** decorator imported from **`neo4j_for_django.contrib.auth.decorators`**. This decorator can take one parameter named **`login_page_url`**. This parameter must be defined with the url, to which redirect the user if he tries to access to the 'logged user only' view.  Otherwise, if the page to redirect to is the same for all of your projects, you could directly define the **`N4D_LOGIN_URL`** variable in your settings.py file. That variable contains the url of your login page.  
 <br/>
 > <small>views.py</small>
 ```python
@@ -307,7 +307,7 @@ def my_view(request):
 <br/>
 <br/>
 
-Once again, if you want to apply specific restrictions (based on permissions) to views, you can use the **`permission_required`** decorator imported from **`neo4j_for_django.contrib.auth.decorators`**. This decorator takes as arguments : the **codename** of the permission and optionally, the url to which one redirect the user if he hasn't the permission required. Else, you can directly define the N4D_HOME_PAGE_URL in your **settings.py** file.
+Once again, if you want to apply specifics restrictions (based on permissions) to views, you can use the **`permission_required`** decorator imported from **`neo4j_for_django.contrib.auth.decorators`**. This decorator takes as arguments : the **codename** of the permission and optionally, the url to which redirect the user if he hasn't the permission required. Or else, you can directly define the N4D_HOME_PAGE_URL in your **settings.py** file.
 <br/>
 > <small>views.py</small>
 ```python
