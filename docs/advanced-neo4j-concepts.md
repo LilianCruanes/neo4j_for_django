@@ -164,7 +164,7 @@ See it [here](https://neo4j.com/docs/api/python-driver/current/transactions.html
 ---
 
 # Bookmarks
-For more program coherence, Neo4j provides **causal chaining** with the usage of **bookmarks**. The principe is to check with a serie of bookmarks, if the requiered previous sessions have been carried out. You can learn more about it [here](https://neo4j.com/docs/driver-manual/1.7/sessions-transactions/#driver-transactions-causal-chaining).  
+For more program coherence, Neo4j provides **causal chaining** with the usage of **bookmarks**. The principle is to check with a serie of bookmarks, if the requiered previous sessions have been carried out. You can learn more about it [here](https://neo4j.com/docs/driver-manual/1.7/sessions-transactions/#driver-transactions-causal-chaining).  
 <br/>
 Demonstration :
 
