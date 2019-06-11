@@ -7,7 +7,7 @@
 
 # Introducing
 **neo4j_for_django** enables easy installation of Django's sessions, compatible with the Neo4j databases. So, it will be possible to implement it in your site : login and registration portals, and logout button.  
-Like in the Django's native sessions, the module interacts with the **neo4j_for_django** authentication. So, we could store in the sessions datas, informations about the current logged user, and so be able to allow access to certain pages for only a certain group of users, for example.  
+Like in the native Django' sessions, the module interacts with the **neo4j_for_django** authentication. So, we could store in the sessions datas, informations about the current logged user, and so be able to allow access to certain pages for only a certain group of users, for example.  
 
 > Note that to setup the sessions and if we don't want to customize them, we will not work with the **neo4j_for_django** sessions themself, but yet with the **neo4j_for_django** authentication, that itself relies on the sessions package.
 
@@ -179,7 +179,7 @@ You can use the **user** variable to access and work with the current logged use
 - ## Apply restrictions
 Sometimes we will need to allow only certain users to see a certain content.  
 <br/>
-In the same way with as the Django's native package, you can allow only the logged users to see a certain content. To do that, use the **user_is_logged** variable, that returns **True** if the user is logged and **False** if he isn't.  
+In the same way with as the native Django's package, you can allow only the logged users to see a certain content. To do that, use the **user_is_logged** variable, that returns **True** if the user is logged and **False** if he isn't.  
 
 > <small>my_template.html</small>
 ```html
